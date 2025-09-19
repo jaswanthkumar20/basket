@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Simple Ecommerce</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0; padding: 0;
+      background: #f9f9f9;
+    }
+    header {
+      background: #2c3e50;
+      color: white;
+      padding: 15px;
+      text-align: center;
+    }
+    .container {
+      display: flex;
+      gap: 20px;
+      padding: 20px;
+    }
+    .products, .cart {
+      flex: 1;
+      background: white;
+      padding: 15px;
+      border-radius: 10px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+    .product {
+      border-bottom: 1px solid #ddd;
+      padding: 10px 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .product:last-child {
+      border: none;
+    }
+    button {
+      padding: 5px 10px;
+      background: #27ae60;
+      border: none;
+      color: white;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+    button:hover {
+      background: #219150;
+    }
+    .cart-item {
+      border-bottom: 1px solid #ddd;
+      padding: 8px 0;
+    }
+    .total {
+      font-weight: bold;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>🛒 Simple Ecommerce Store</h1>
+  </header>
+
+  <div class="container">
+    <!-- Product List -->
+    <div class="products">
+      <h2>Products</h2>
+      <div class="product">
+        <span>Product A - $10</span>
+        <button onclick="addToCart('Product A', 10)">Add</button>
+      </div>
+      <div class="product">
+        <span>Product B - $20</span>
+        <button onclick="addToCart('Product B', 20)">Add</button>
+      </div>
+      <div class="product">
+        <span>Product C - $15</span>
+        <button onclick="addToCart('Product C', 15)">Add</button>
+      </div>
+    </div>
+
+    <!-- Cart -->
+    <div class="cart">
+      <h2>Your Cart</h2>
+      <div id="cart-items"></div>
+      <div class="total">Total: $<span id="cart-total">0</span></div>
+    </div>
+  </div>
+
+  <script>
+    let cart = [];
+    
+    function addToCart(name, price) {
+      cart.push({name, price});
+      displayCart();
+    }
+
+    function displayCart() {
+      const cartItemsDiv = document.getElementById("cart-items");
+      const cartTotalSpan = document.getElementById("cart-total");
+      cartItemsDiv.innerHTML = "";
+      let total = 0;
+
+      cart.forEach((item, index) => {
+        total += item.price;
+        cartItemsDiv.innerHTML += `
+          <div class="cart-item">
+            ${item.name} - $${item.price}
+            <button onclick="removeFromCart(${index})">X</button>
+          </div>`;
+      });
+
+      cartTotalSpan.textContent = total;
+    }
+
+    function removeFromCart(index) {
+      cart.splice(index, 1);
+      displayCart();
+    }
+  </script>
+</body>
+</html>
